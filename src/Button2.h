@@ -43,13 +43,12 @@ enum clickType {
 class Button2 {
  protected:
   int id;
-  byte pin;
-  byte state;
-  byte prev_state;
-  byte click_count = 0;
-  byte last_click_count = 0;
-  clickType last_click_type = empty;
-  bool was_pressed = false;
+  uint8_t pin;
+  uint8_t state;
+  uint8_t prev_state;
+  uint8_t click_count = 0;
+  uint8_t last_click_count = 0;
+  clickType last_click_type;
   unsigned long click_ms;
   unsigned long down_ms;
 
@@ -70,7 +69,7 @@ class Button2 {
   typedef std::function<byte()> StateCallbackFunction;
 #else
   typedef void (*CallbackFunction)(Button2 &);
-  typedef byte (*StateCallbackFunction)();
+  typedef uint8_t (*StateCallbackFunction)();
 #endif
 
   StateCallbackFunction get_state_cb = NULL;
@@ -96,9 +95,9 @@ class Button2 {
 
  public:
   Button2();
-  Button2(byte attachTo, byte buttonMode = INPUT_PULLUP, boolean activeLow = true, Hardware* hardware = new ArduinoHardware());
+  Button2(uint8_t attachTo, uint8_t buttonMode = INPUT_PULLUP, boolean activeLow = true, Hardware* hardware = new ArduinoHardware());
 
-  void begin(byte attachTo, byte buttonMode = INPUT_PULLUP, boolean activeLow = true, Hardware* hardware = new ArduinoHardware());
+  void begin(uint8_t attachTo, uint8_t buttonMode = INPUT_PULLUP, boolean activeLow = true, Hardware* hardware = new ArduinoHardware());
 
   void setDebounceTime(unsigned int ms);
   void setLongClickTime(unsigned int ms);
@@ -107,7 +106,7 @@ class Button2 {
   unsigned int getDebounceTime() const;
   unsigned int getLongClickTime() const;
   unsigned int getDoubleClickTime() const;
-  byte getPin() const;
+  uint8_t getPin() const;
 
   void reset();
 
@@ -131,7 +130,7 @@ class Button2 {
   boolean isPressed() const;
   boolean isPressedRaw() const;
   void resetPressedState();
-  byte resetClickCount();
+  uint8_t resetClickCount();
 
   bool wasPressed() const;
   clickType read(bool keepState = false);
@@ -141,8 +140,8 @@ class Button2 {
   void waitForTriple(bool keepState = false);
   void waitForLong(bool keepState = false);
 
-  byte getNumberOfClicks() const;
-  byte getLongClickCount() const;
+  uint8_t getNumberOfClicks() const;
+  uint8_t getLongClickCount() const;
 
   clickType getType() const;
   String clickToString(clickType type) const;
@@ -156,8 +155,8 @@ class Button2 {
 
  private:
   static int _nextID;
-  byte _pressedState;
-  byte _getState() const;
+  uint8_t _pressedState;
+  uint8_t _getState() const;
   Hardware* hw;
 
 };
